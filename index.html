@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Redux with Vanilla Javascript</title>
+</head>
+
+<body>
+    <div><p>Counter: <span id="count">0</span></p></div>
+    <div>
+        <button id="increment">+</button>
+        <button id="decrement">-</button>
+    </div>
+
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+    <script>
+
+        function counter(state = 0, action) {
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1
+                case 'DECREMENT':
+                    return state - 1
+                default:
+                    return state
+            }
+        }
+
+        const store = Redux.createStore(counter)
+
+        const counterValue = document.getElementById('count')
+        const btnIncrement = document.getElementById('increment')
+        const btnDecrement = document.getElementById('decrement')
+
+        function render() {
+            counterValue.innerHTML = store.getState().toString()
+        }
+
+        render()
+        store.subscribe(render)
+
+        btnIncrement.addEventListener('click', () => store.dispatch({ type: 'INCREMENT' }))
+        btnDecrement.addEventListener('click', () => store.dispatch({ type: 'DECREMENT'}))
+
+
+    </script>
+</body>
+
+</html>
